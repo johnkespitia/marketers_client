@@ -1,9 +1,26 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { loginRequest } from "../actions";
 import logo from "../assets/logo.svg";
-const Login = () => {
+const Login = (props) => {
+	const [form, setValues] = useState({
+		email: "",
+	});
+	const handleInput = (event) => {
+		setValues({
+			...form,
+			[event.target.name]: event.target.value,
+		});
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		props.loginRequest(form);
+		props.history.push("/");
+	};
 	return (
 		<Container fluid>
 			<Row>
@@ -13,13 +30,14 @@ const Login = () => {
 						<Card.Body>
 							<Card.Title>Ingreso al sistema</Card.Title>
 							<Card.Img variant='top' src={logo} width='100' height='100' />
-							<Form>
+							<Form onSubmit={handleSubmit}>
 								<Form.Group controlId='formBasicEmail'>
 									<Form.Label>Email</Form.Label>
 									<Form.Control
 										type='email'
 										name='email'
 										placeholder='Ingrese su email'
+										onChange={handleInput}
 									/>
 									<Form.Text className='text-muted'>
 										Es importante que ingrese el email con el que fue registrado
@@ -32,6 +50,7 @@ const Login = () => {
 										type='password'
 										name='password'
 										placeholder='Ingrese su contraseña'
+										onChange={handleInput}
 									/>
 								</Form.Group>
 								<Button variant='primary' type='submit'>
@@ -46,4 +65,8 @@ const Login = () => {
 	);
 };
 
-export default Login;
+const mapDispatchToProps = {
+	loginRequest,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
