@@ -19,7 +19,7 @@ const Home = (props) => {
 					Edit <code>src/App.js</code> and save to reload.
 				</p>
 				<Button className='App-link' rel='noopener noreferrer'>
-					{props.user.email}
+					data
 				</Button>
 			</header>
 		</div>

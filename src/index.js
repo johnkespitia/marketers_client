@@ -4,7 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./router/App";
-import { createStore, compose } from "redux";
+import { createStore, compose, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
@@ -12,6 +12,7 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import * as serviceWorker from "./serviceWorker";
+import reduxThunk from "redux-thunk";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const persistConfig = {
@@ -20,15 +21,13 @@ const persistConfig = {
 	stateReconciler: autoMergeLevel1,
 };
 
-const initialState = {
-	user: {},
-	playing: {},
-	mylist: [{ greeting: "hola", complement: "mundo" }],
-};
-
 const persistedReducer = persistReducer(persistConfig, reducer);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(persistedReducer, initialState, composeEnhancers());
+const store = createStore(
+	persistedReducer,
+	{},
+	composeEnhancers(applyMiddleware(reduxThunk))
+);
 let persistor = persistStore(store);
 
 ReactDOM.render(

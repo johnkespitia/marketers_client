@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { loginRequest } from "../actions";
+import { loginRequest } from "../actions/usuariosActions";
 import logo from "../assets/logo.svg";
 const Login = (props) => {
 	const [form, setValues] = useState({
@@ -18,7 +18,12 @@ const Login = (props) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		props.loginRequest(form);
+		console.log(form);
+		const loginData = {
+			email: form.email,
+			password: form.password,
+		};
+		props.loginRequest(loginData);
 		props.history.push("/");
 	};
 	return (

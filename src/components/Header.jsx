@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { logoutRequest } from "../actions";
+import { logoutRequest } from "../actions/usuariosActions";
 import { connect } from "react-redux";
 import {
 	Navbar,
@@ -18,7 +18,7 @@ const HeaderComp = (props) => {
 	const handleLogout = () => {
 		props.logoutRequest({});
 	};
-	const hasUser = Object.keys(props.user).length > 0;
+	const hasUser = Object.keys(props.userData.user).length > 0;
 	return (
 		<Navbar bg='light' expand='lg'>
 			<Navbar.Brand>
@@ -53,7 +53,7 @@ const HeaderComp = (props) => {
 				) : (
 					<Nav className='col-auto'>
 						<Link className='nav-link' to='/login'>
-							Account {props.user.name}
+							Account {props.userData.name}
 						</Link>
 						<Nav.Link onClick={handleLogout}>Logout</Nav.Link>
 					</Nav>
@@ -70,7 +70,7 @@ const HeaderComp = (props) => {
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userData: state.usuarioReducer,
 	};
 };
 const mapDispatchToProps = {
