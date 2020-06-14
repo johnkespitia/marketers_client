@@ -5,10 +5,20 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./router/App";
 import { createStore, compose } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import { Provider } from "react-redux";
 import reducer from "./reducers";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+const persistConfig = {
+	key: "root",
+	storage,
+	stateReconciler: autoMergeLevel1,
+};
 
 const initialState = {
 	user: {},
@@ -16,13 +26,17 @@ const initialState = {
 	mylist: [{ greeting: "hola", complement: "mundo" }],
 };
 
+const persistedReducer = persistReducer(persistConfig, reducer);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, initialState, composeEnhancers());
+const store = createStore(persistedReducer, initialState, composeEnhancers());
+let persistor = persistStore(store);
 
 ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<PersistGate loading={null} persistor={persistor}>
+				<App />
+			</PersistGate>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById("root")
