@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { loginRequest } from "../actions/usuariosActions";
-import logo from "../assets/logo.svg";
+import { loginRequest } from "../../actions/usuariosActions";
+import { businessGet } from "../../actions/businessActions";
+import logo from "../../assets/logo.svg";
+import { Redirect } from "react-router-dom";
 const Login = (props) => {
 	const [form, setValues] = useState({
 		email: "",
@@ -24,8 +26,16 @@ const Login = (props) => {
 			password: form.password,
 		};
 		props.loginRequest(loginData);
-		props.history.push("/");
 	};
+	if (Object.keys(props.userData.user).length > 0) {
+		props.businessGet(
+			props.userData.user.api_token,
+			props.userData.user.business_id
+		);
+	}
+	if (Object.keys(props.businessData.mybusiness).length > 0) {
+		return <Redirect to='/' />;
+	}
 	return (
 		<Container fluid>
 			<Row>
@@ -72,6 +82,12 @@ const Login = (props) => {
 
 const mapDispatchToProps = {
 	loginRequest,
+	businessGet,
 };
-
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => {
+	return {
+		userData: state.usuarioReducer,
+		businessData: state.businessReducer,
+	};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

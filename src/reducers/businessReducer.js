@@ -1,42 +1,34 @@
 /** @format */
 
 const INITIAL_STATE = {
-	usuarios: [],
+	mybusiness: {},
 	cargando: false,
 	error: "",
-	user: {},
 	update_status: false,
 };
 export default (state = INITIAL_STATE, action) => {
 	switch (action.type) {
-		case "USER_ALL":
+		case "BUSINESS_REG":
 			return {
 				...state,
-				usuarios: action.payload,
+				mybusiness: action.payload,
 				cargando: action.cargando,
 				error: "",
 				update_status: false,
 			};
-		case "USER_UPDATE":
+		case "BUSINESS_GET":
 			return {
 				...state,
-				update_status: action.payload,
+				mybusiness: action.payload,
 				cargando: action.cargando,
-				error: "",
-			};
-		case "LOGIN":
-			return {
-				...state,
-				user: action.payload,
-				cargando: false,
 				error: "",
 				update_status: false,
 			};
-		case "LOGOUT":
+		case "LOGOUT_BUSINESS":
 			return {
 				...state,
-				user: action.payload,
-				cargando: false,
+				mybusiness: action.payload,
+				cargando: action.cargando,
 				error: "",
 				update_status: false,
 			};
@@ -48,13 +40,6 @@ export default (state = INITIAL_STATE, action) => {
 				error: action.payload,
 				cargando: false,
 				update_status: false,
-			};
-		case "USER_REGISTER":
-			return {
-				...state,
-				user: action.payload,
-				cargando: action.cargando,
-				error: "",
 			};
 		default:
 			return state;

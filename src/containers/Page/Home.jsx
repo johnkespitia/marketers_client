@@ -2,7 +2,7 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import logo from "../assets/logo.svg";
+import logo from "../../assets/logo.svg";
 import { Button } from "react-bootstrap";
 const Home = (props) => {
 	return (

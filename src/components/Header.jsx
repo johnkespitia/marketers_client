@@ -2,6 +2,7 @@
 
 import React from "react";
 import { logoutRequest } from "../actions/usuariosActions";
+import { logoutBusinessRequest } from "../actions/businessActions";
 import { connect } from "react-redux";
 import {
 	Navbar,
@@ -16,9 +17,12 @@ import logo from "../assets/logo.svg";
 
 const HeaderComp = (props) => {
 	const handleLogout = () => {
-		props.logoutRequest({});
+		props.logoutRequest(props.userData.user.api_token);
 	};
 	const hasUser = Object.keys(props.userData.user).length > 0;
+	if (!hasUser) {
+		props.logoutBusinessRequest();
+	}
 	return (
 		<Navbar bg='light' expand='lg'>
 			<Navbar.Brand>
@@ -41,6 +45,10 @@ const HeaderComp = (props) => {
 						About
 					</Link>
 				</Nav>
+				<Form inline className='mr-auto'>
+					<FormControl type='text' placeholder='Search' className='mr-sm-2' />
+					<Button variant='outline-success'>Search</Button>
+				</Form>
 				{!hasUser ? (
 					<Nav className='col-auto'>
 						<Link className='nav-link' to='/login'>
@@ -58,11 +66,6 @@ const HeaderComp = (props) => {
 						<Nav.Link onClick={handleLogout}>Logout</Nav.Link>
 					</Nav>
 				)}
-
-				<Form inline className='mr-auto'>
-					<FormControl type='text' placeholder='Search' className='mr-sm-2' />
-					<Button variant='outline-success'>Search</Button>
-				</Form>
 			</Navbar.Collapse>
 		</Navbar>
 	);
@@ -75,6 +78,7 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = {
 	logoutRequest,
+	logoutBusinessRequest,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComp);
 
