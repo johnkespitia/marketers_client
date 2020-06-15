@@ -12,7 +12,6 @@ export const businessRegister = (payload) => async (dispatch) => {
 			payload: respuesta.data,
 			cagando: false,
 		});
-		console.log(respuesta.data);
 	} catch (error) {
 		dispatch({
 			type: "ERROR",
@@ -39,7 +38,6 @@ export const businessGet = (token, id) => async (dispatch) => {
 			payload: respuesta.data,
 			cagando: false,
 		});
-		console.log(respuesta.data);
 	} catch (error) {
 		dispatch({
 			type: "ERROR",

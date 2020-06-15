@@ -20,7 +20,6 @@ const Login = (props) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		console.log(form);
 		const loginData = {
 			email: form.email,
 			password: form.password,
