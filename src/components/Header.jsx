@@ -6,7 +6,7 @@ import { logoutBusinessRequest } from "../actions/businessActions";
 import { connect } from "react-redux";
 import {
 	Navbar,
-	//NavDropdown,
+	NavDropdown,
 	Form,
 	FormControl,
 	Button,
@@ -60,9 +60,14 @@ const HeaderComp = (props) => {
 					</Nav>
 				) : (
 					<Nav className='col-auto'>
-						<Link className='nav-link' to='/login'>
-							Account {props.userData.name}
-						</Link>
+						<NavDropdown
+							title={props.userData.user.name}
+							id='basic-nav-dropdown'>
+							<Link className='dropdown-item' to='/account'>
+								Account
+							</Link>
+						</NavDropdown>
+
 						<Nav.Link onClick={handleLogout}>Logout</Nav.Link>
 					</Nav>
 				)}
@@ -83,11 +88,5 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderComp);
 
 /*
-<NavDropdown title='Dropdown' id='basic-nav-dropdown'>
-					<NavDropdown.Item href='#action/3.1'>Action</NavDropdown.Item>
-					<NavDropdown.Item href='#action/3.2'>Another action</NavDropdown.Item>
-					<NavDropdown.Item href='#action/3.3'>Something</NavDropdown.Item>
-					<NavDropdown.Divider />
-					<NavDropdown.Item href='#action/3.4'>Separated link</NavDropdown.Item>
-				</NavDropdown> 
+ 
 */

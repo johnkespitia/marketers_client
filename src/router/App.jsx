@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "../containers/Page/Home";
 import About from "../containers/Page/About";
 import Login from "../containers/Page/Login";
+import Account from "../containers/Page/Account";
 import Register from "../containers/Page/Register";
 import RegisterBusiness from "../containers/Business/RegisterBusiness";
 import NotFound from "../containers/Page/NotFound";
@@ -19,6 +20,7 @@ const App = () => (
 				<Route exact path='/login' component={Login} />
 				<Route exact path='/register' component={RegisterBusiness} />
 				<Route exact path='/newuser' component={Register} />
+				<Route exact path='/account' component={Account} />
 				<Route component={NotFound} />
 			</Switch>
 		</Layout>
